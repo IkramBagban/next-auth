@@ -12,9 +12,31 @@ const SignupPage = () => {
     password: "",
   });
 
-  const inputChangeHandler = (e) => {
+  const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
+
+  const inputChangeHandler = (e: any) => {
     const { name, value } = e.target;
     setUser((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const signupHandler = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      const response = await axios.post("/api/users/signup", user);
+
+      if (response.status === 201) {
+        router.push("/login");
+      }
+
+      console.log("signup response", response);
+    } catch (error) {
+      console.log("error", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -23,7 +45,7 @@ const SignupPage = () => {
         <h2 className="text-2xl font-semibold text-center text-white mb-6">
           Sign Up
         </h2>
-        <form>
+        <form onSubmit={signupHandler}>
           <div className="mb-4">
             <label
               htmlFor="username"
