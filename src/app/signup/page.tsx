@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 const SignupPage = () => {
+  const router = useRouter();
   const [user, setUser] = useState({
     username: "",
     email: "",
@@ -14,14 +15,12 @@ const SignupPage = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const router = useRouter();
-
   const inputChangeHandler = (e: any) => {
     const { name, value } = e.target;
     setUser((prev) => ({ ...prev, [name]: value }));
   };
 
-  const signupHandler = async (e) => {
+  const signupHandler = async (e:any) => {
     e.preventDefault();
     try {
       setLoading(true);
